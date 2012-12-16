@@ -6,10 +6,6 @@ class ConnectClass {
 	 	var $username;
 	 	var $password;
 	 	var $db;
-	 	var $pageId;
-		var $contentId;
-		var $content;
-
 	/**
 	* [managerClass Constructor de la clase ConnectClass]
 	*/
@@ -20,9 +16,9 @@ class ConnectClass {
 	 		$this->db='alohadb';
 	 		$this->conn='';
 	 		//save data
-	 		$this->pageId = sqlite_escape_string($_REQUEST['pageId']);
+	 		/*$this->pageId = sqlite_escape_string($_REQUEST['pageId']);
 			$this->contentId = sqlite_escape_string($_REQUEST['contentId']);
-			$this->content =  sqlite_escape_string($_REQUEST['content']);
+			$this->content =  sqlite_escape_string($_REQUEST['content']);*/
 	}
 	
 	/**
@@ -38,20 +34,32 @@ class ConnectClass {
 	/**
 	 * [getContenidos description]
 	 * @param  [string] $contentId [nombre del div a buscar]
-	 * @return [string] [contenido del div buscado, o mensaje por defecto en caso de no existir]
+	 * @return [JSON] [contenidos de los divs buscados, o mensaje por defecto en caso de no existir]
 	 */
-	function getContenidos($contentId){
+	function getContenidos(){
 		$pageId = $_SERVER['SCRIPT_NAME'];
-		$sql_query = "SELECT content FROM `data_aloha` WHERE pageId = '".$this->pageId."' AND contentId = '".$this->contentId."'";
+		//$sql_query = "SELECT content FROM `data_aloha` WHERE pageId = '".$this->pageId."' AND contentId = '".$this->contentId."'";
+		//$sql_query = "SELECT pageId, contentId, content FROM `data_aloha`";
+		$sql_query = "SELECT content FROM `data_aloha`";
 		$result=mysql_query($sql_query);
-		if($row=mysql_fetch_array($result)){
+		$jsondata = array();
+  		$i = 0;
+		//usando while y mysql_fetch_assoc
+		while ($row = mysql_fetch_assoc($result)) {
+			$jsondata[$i]['contenido'] = $row['content'];
+			$i++;
+		}
+		return json_encode($jsondata);
+		/*if($row=mysql_fetch_array($result)){
 			return $row['content'];
 		}else{
 			return 'click para editar';			
-		}
+		}*/
 	}
+
 	/**
 	 * [saveContenidos se encarga de guardar en la db el contenido de los div modificados]
+	 * @return [string] [msg de confirmacion]
 	 */
 	function saveContenidos(){
 		$existe=false;
@@ -78,10 +86,34 @@ class ConnectClass {
 		$error=mysql_error($this->conn);
 
 		if ( empty($error)) {
-			echo 'Contenido salvado. fue: '.$tipo;
+			return 'Contenido salvado. fue: '.$tipo;
 		}else{
-			echo 'Error: el contenido NO pudo ser salvado.'.$error;
+			return 'Error: el contenido NO pudo ser salvado.'.$error;
 		}
 	}
 }//class
+if ( isset($_GET['options']) ){
+		$option= $_GET['options'];
+	 	if ($option){
+			$manager = new ConnectClass();
+			$manager->connect();
+			$ok="";
+		 	switch ($option) {
+		 		case 'save': 			
+					$ok=$manager->saveContenidos();
+		 			break;
+		 			case 'getcontent': 			
+					$ok=$manager->getContenidos();
+		 			break;
+		 		default:
+					$ok="Error en menuoption: ".$option;
+		 			break;
+		 	}//case		 	
+	 	}else{
+			$ok="opcion desconocida: ".$option;
+	 	}//option
+		echo $ok;
+ 	}else{
+		echo "Error NO hay peticiones GET";
+ 	}//isset $_GET
 ?>

@@ -15,8 +15,8 @@ Aloha.ready(function() {
 			}
 			console.log("intentando guardar",pageId,content,contentId);
 			var request = jQuery.ajax({
-				url: "save.php",
-				type: "POST",
+				url: "managerdb.php?options=save",
+				type: "GET",
 				data: {
 					content : content,
 					contentId : contentId,
