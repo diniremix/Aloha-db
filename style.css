@@ -1,0 +1,15 @@
+#headline {
+	font-size: 1.3em;
+}
+
+#article {
+	margin-top: 20px;
+}
+
+#log {
+	border: 2px dashed green;
+	margin: 5px auto 5px auto;
+	padding: 5px;
+	width: 75%;
+	display: none;
+}

@@ -5,7 +5,11 @@
 Un servidor con soporte para [PHP5](http://php.net/) y **MySQL**
 
 ### Instalacion de Aloha Editor ###
-Descargar [Aloha Editor](http://www.alohaeditor.org/) y renombrar la carpeta a **aloha** simplemente.
+Clonar este repositorio
+
+	git clone git://github.com/diniremix/Aloha-db.git
+
+Descargar [Aloha Editor](http://www.alohaeditor.org/) descomprimir y renombrar la carpeta a **aloha** simplemente.
 
 ### Lista de Cambios ###
 
