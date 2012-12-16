@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title > Editor Aloha</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Getting Started with Aloha Editor</title>
+    <!--<link rel="stylesheet" href="index.css" type="text/css">-->
+    <!-- Load Aloha Editor css and js -->
+    <link rel="stylesheet" href="aloha/src/css/aloha.css" type="text/css">
+    <script src="aloha/src/lib/require.js"></script>
+    <script src="aloha/src/lib/vendor/jquery-1.7.2.js"></script>
+    <script src="aloha/src/lib/aloha.js"
+      data-aloha-plugins="common/ui,common/format,common/highlighteditables,common/link,common/paste,common/image,common/contenthandler,common/undo,common/commands,common/abbr,common/block,common/table,common/list"></script>
+</head>
+<body>
+    <div id="main">
+        <div id="editable"><p>Getting started with Aloha Editor!</p></div>
+        <div id="otra"><p>Getting started with Aloha Editor!</p></div>
+        <label for="btnsave"><strong>guardar</strong></label>
+        <input type="button" id="btnsave" name="btnsave" value="Guardar" placeholder="">
+    </div>
+    <script type="text/javascript">
+        Aloha.ready( function() {
+        	
+            Aloha.jQuery('#editable').aloha();
+            Aloha.jQuery('#otra').aloha();
+            $('#titulo').alohaBlock();
+        });
+        $("#Button").click(function () {
+    		var $ = Aloha.jQuery;
+	    	$('#btnsave').append('<div class="editables" id="ed" ></div>');
+	    	//Aloha.jQuery('.editables').mahalo();
+	    	Aloha.jQuery('.editables').aloha();   
+		});
+
+    </script>
+</body>
